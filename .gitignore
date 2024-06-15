@@ -1,0 +1,26 @@
+# .gitignore for PowerShell project with LibreOffice Auto-Installer
+
+# Ignore PowerShell data files
+*.psd1
+*.psm1
+
+# Ignore log files and scripts output
+*.log
+*.txt
+
+# Ignore temporary files and backup files
+*~
+*.tmp
+*.bak
+
+# Ignore downloaded installers
+*.msi
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore Windows image file backups
+*.iso
+
+# Ignore package management folders
+packages/
