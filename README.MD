@@ -25,6 +25,12 @@ This PowerShell script automates the process of downloading and installing Libre
 1. **Run PowerShell as Administrator**: Right-click on PowerShell and select "Run as administrator".
 2. **Execute the Script**: Navigate to the directory containing the script and run it by typing `.\Libra-Office-Auto-Installer.ps1`.
 
+### if usage doesnt work use this first run it then select `Y` thats it click enter then run the script again 
+```
+Set-ExecutionPolicy Bypass -Scope Process
+```
+then repeat the process you can leave powershell open in admin mode to do this you dont have to close it
+
 ## Features
 
 - **Administrator Check**: Ensures the script is run with administrator privileges.
