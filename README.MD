@@ -21,7 +21,7 @@ This PowerShell script automates the process of downloading and installing Libre
 - [32-Bit-Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.3/PowerShell-7.4.3-win-x86.msi)
 
 
-# PowerShell Script for LibreOffice Installation with Logging
+# PowerShell Script for LibreOffice Installation with Logging **FOR NON ADMIN**
 
 This PowerShell script downloads and installs LibreOffice, with robust error handling and logging functionalities.
 
@@ -86,6 +86,85 @@ function Log-Message {
 # Example usage
 Log-Message 'This is an informational message.'
 Log-Message 'This is an error message.' 'ERROR'
+
+
+
+# Logging Functionality in PowerShell Script
+
+Overview of the logging functionality integrated into the PowerShell script for downloading and installing LibreOffice. The script is designed to ensure all activities are logged for better traceability and error handling.
+
+## Features
+
+- **Logging to Console and File**: The script logs messages to both the console and a log file.
+- **Timestamped Entries**: Each log entry includes a timestamp.
+- **Log Levels**: Different log levels (INFO, WARNING, ERROR) are used to categorize log messages.
+- **Error Handling**: Critical sections of the script are wrapped in `try-catch` blocks to handle and log errors appropriately.
+
+## Logging Function
+
+The `Write-Log` function is the core of the logging functionality. It logs messages to both the console and a file.
+
+### Function Definition
+
+```powershell
+function Write-Log {
+    param (
+        [string]$Message,
+        [string]$LogLevel = "INFO"
+    )
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logMessage = "$timestamp [$LogLevel] $Message"
+    Write-Output $logMessage
+    Add-Content -Path "$PSScriptRoot\installation_log.txt" -Value $logMessage
+}
+```
+
+Parameters
+- `$Message:` The log message to be recorded.
+- `$LogLevel:` The log level of the message. Default is "INFO".
+
+## How It Works
+
+1. `Timestamp Generation:` The current date and time are formatted as yyyy-MM-dd HH:mm:ss
+2. `Log Message Formatting:` The log message is prefixed with the timestamp and log level.
+3. `Output to Console:` The formatted log message is written to the console.
+4. `Write to File:` The formatted log message is appended to the log file located at `$PSScriptRoot\installation_log.txt`.
+
+
+## Usage Examples
+
+- Logging an Information Message
+```
+Write-Log "Downloading LibreOffice installer..."
+```
+
+- Logging a Warning Message
+```
+Write-Log "You need to run this script as an administrator." "WARNING"
+```
+
+- Logging an Error Message
+```
+Write-Log "Error downloading LibreOffice installer: $_" "ERROR"
+```
+
+## Error Handling with Logging
+- Critical sections of the script, such as downloading and installing LibreOffice, are wrapped in `try-catch` blocks to log any errors that occur.
+
+Example:
+```
+try {
+    Write-Log 'Downloading LibreOffice installer...'
+    Invoke-WebRequest -Uri $LibreOfficeURL -OutFile 'LibreOffice_24.2.4_Win_x86-64.msi' -ErrorAction Stop
+    Write-Log 'LibreOffice installer downloaded successfully.'
+} catch {
+    Write-Log "Error downloading LibreOffice installer: $_" "ERROR"
+    Exit 1
+}
+```
+
+## Log File Location
+- The log file, `installation_log.txt`, is created in the same directory as the script. All log entries are appended to this file.
 
 
 ## How to Use
