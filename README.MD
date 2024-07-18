@@ -20,6 +20,74 @@ This PowerShell script automates the process of downloading and installing Libre
 - [64-Bit-Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.3/PowerShell-7.4.3-win-x64.msi)
 - [32-Bit-Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.3/PowerShell-7.4.3-win-x86.msi)
 
+
+# PowerShell Script for LibreOffice Installation with Logging
+
+This PowerShell script downloads and installs LibreOffice, with robust error handling and logging functionalities.
+
+## Logging Functionality
+
+The script includes a logging function that logs messages to both the console and a log file. This helps in tracking the progress and any errors during the script execution.
+
+### Log-Message Function
+
+The `Log-Message` function is used to log informational and error messages. It takes two parameters:
+- `message`: The message to log.
+- `type`: The type of message (`INFO` or `ERROR`). Default is `INFO`.
+
+### Log File
+
+All log messages are appended to a log file named `install_log.txt` located in the same directory as the script.
+
+### Example Log Entries
+
+Below are examples of log entries that might appear in `install_log.txt`:
+
+```
+2024-07-18 12:00:00 [INFO] Starting LibreOffice installation process.
+2024-07-18 12:01:00 [INFO] Downloading LibreOffice installer...
+2024-07-18 12:02:00 [INFO] Download completed successfully.
+2024-07-18 12:03:00 [INFO] Installing LibreOffice...
+2024-07-18 12:04:00 [INFO] Installation completed successfully.
+2024-07-18 12:05:00 [INFO] LibreOffice installed successfully.
+2024-07-18 12:06:00 [INFO] Deleting LibreOffice installer...
+2024-07-18 12:07:00 [INFO] Installer deleted successfully. Installation process is complete.
+```
+
+### Error Handling and Logging
+
+If any step in the script fails, an error message is logged with the `[ERROR]` type, and the script exits with a non-zero status code. Example error log entries:
+
+```
+2024-07-18 12:01:00 [ERROR] Failed to download the LibreOffice installer.
+2024-07-18 12:04:00 [ERROR] Failed to install LibreOffice.
+2024-07-18 12:05:00 [ERROR] LibreOffice installation verification failed.
+2024-07-18 12:07:00 [ERROR] Failed to delete the LibreOffice installer.
+```
+
+
+### Usage
+
+To use the logging functionality in your PowerShell script, include the `Log-Message` function and call it at appropriate points in your script:
+
+```powershell
+function Log-Message {
+    param (
+        [string]$message,
+        [string]$type = 'INFO'
+    )
+    $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+    $logMessage = "$timestamp [$type] $message"
+    Write-Output $logMessage
+    Add-Content -Path $logFilePath -Value $logMessage
+}
+```
+
+# Example usage
+Log-Message 'This is an informational message.'
+Log-Message 'This is an error message.' 'ERROR'
+
+
 ## How to Use
 
 1. **Run PowerShell as Administrator**: Right-click on PowerShell and select "Run as administrator".
