@@ -1,6 +1,18 @@
+# Define log function
+function Write-Log {
+    param (
+        [string]$Message,
+        [string]$LogLevel = "INFO"
+    )
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logMessage = "$timestamp [$LogLevel] $Message"
+    Write-Output $logMessage
+    Add-Content -Path "$PSScriptRoot\installation_log.txt" -Value $logMessage
+}
+
 # Check if running as administrator
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Warning "You need to run this script as an administrator."
+    Write-Log "You need to run this script as an administrator." "WARNING"
     Start-Sleep -Seconds 3
     Start-Process powershell.exe -Verb RunAs -ArgumentList ("-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"")
     Exit
@@ -16,22 +28,39 @@ $installPathLibreOffice = 'C:\Program Files\LibreOffice'
 Set-Location -Path $PSScriptRoot
 
 # Downloading the LibreOffice installer
-Write-Output 'Downloading LibreOffice installer...'
-Invoke-WebRequest -Uri $LibreOfficeURL -OutFile 'LibreOffice_24.2.4_Win_x86-64.msi'
+try {
+    Write-Log 'Downloading LibreOffice installer...'
+    Invoke-WebRequest -Uri $LibreOfficeURL -OutFile 'LibreOffice_24.2.4_Win_x86-64.msi' -ErrorAction Stop
+    Write-Log 'LibreOffice installer downloaded successfully.'
+} catch {
+    Write-Log "Error downloading LibreOffice installer: $_" "ERROR"
+    Exit 1
+}
 
 # Installing LibreOffice
-Write-Output 'Installing LibreOffice...'
-Start-Process 'msiexec.exe' -ArgumentList "/i LibreOffice_24.2.4_Win_x86-64.msi /qn INSTALLDIR=`"$installPathLibreOffice`"" -NoNewWindow -Wait
+try {
+    Write-Log 'Installing LibreOffice...'
+    Start-Process 'msiexec.exe' -ArgumentList "/i LibreOffice_24.2.4_Win_x86-64.msi /qn INSTALLDIR=`"$installPathLibreOffice`"" -NoNewWindow -Wait
+    Write-Log 'LibreOffice installation initiated.'
+} catch {
+    Write-Log "Error starting LibreOffice installation: $_" "ERROR"
+    Exit 1
+}
 
 # Confirm installation
 if (Get-Command "$installPathLibreOffice\program\soffice.exe" -ErrorAction SilentlyContinue) {
-    Write-Output 'Installation completed successfully.'
+    Write-Log 'Installation completed successfully.'
 } else {
-    Write-Output 'Installation failed.'
+    Write-Log 'Installation failed.' "ERROR"
     Exit 1
 }
 
 # Delete the downloaded installer after installation
-Write-Output 'Deleting LibreOffice installer...'
-Remove-Item 'LibreOffice_24.2.4_Win_x86-64.msi' -Force
-Write-Output 'Installer deleted. Installation process is complete.'
+try {
+    Write-Log 'Deleting LibreOffice installer...'
+    Remove-Item 'LibreOffice_24.2.4_Win_x86-64.msi' -Force -ErrorAction Stop
+    Write-Log 'Installer deleted. Installation process is complete.'
+} catch {
+    Write-Log "Error deleting LibreOffice installer: $_" "ERROR"
+    Exit 1
+}
