@@ -21,7 +21,7 @@ This PowerShell script automates the process of downloading and installing Libre
 - [32-Bit-Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.3/PowerShell-7.4.3-win-x86.msi)
 
 
-# PowerShell Script for LibreOffice Installation with Logging **FOR NON ADMIN**
+# PowerShell Script for LibreOffice Installation with Logging **RUN NON ADMIN**
 
 This PowerShell script downloads and installs LibreOffice, with robust error handling and logging functionalities.
 
@@ -89,7 +89,7 @@ Log-Message 'This is an error message.' 'ERROR'
 
 
 
-# Logging Functionality in PowerShell Script
+# Logging Functionality in PowerShell Script **RUN IN ADMIN**
 
 Overview of the logging functionality integrated into the PowerShell script for downloading and installing LibreOffice. The script is designed to ensure all activities are logged for better traceability and error handling.
 
