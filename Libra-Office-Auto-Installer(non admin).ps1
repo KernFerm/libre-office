@@ -9,18 +9,39 @@ Set-Location -Path $PSScriptRoot
 
 Write-Output 'Downloading LibreOffice installer...'
 
-# Downloading the LibreOffice installer
-Invoke-WebRequest -Uri $LibreOfficeURL -OutFile 'LibreOffice_24.2.4_Win_x86-64.msi'
+try {
+    # Downloading the LibreOffice installer
+    Invoke-WebRequest -Uri $LibreOfficeURL -OutFile 'LibreOffice_24.2.4_Win_x86-64.msi'
+    Write-Output 'Download completed successfully.'
+} catch {
+    Write-Error 'Failed to download the LibreOffice installer.'
+    exit 1
+}
 
 Write-Output 'Installing LibreOffice...'
 
-# Execute the installation file
-Start-Process 'msiexec.exe' -ArgumentList "/i LibreOffice_24.2.4_Win_x86-64.msi /qn INSTALLDIR=`"$installPathLibreOffice`"" -NoNewWindow -Wait
+try {
+    # Execute the installation file
+    Start-Process 'msiexec.exe' -ArgumentList "/i LibreOffice_24.2.4_Win_x86-64.msi /qn INSTALLDIR=`"$installPathLibreOffice`"" -NoNewWindow -Wait
+    Write-Output 'Installation completed successfully.'
+} catch {
+    Write-Error 'Failed to install LibreOffice.'
+    exit 1
+}
 
-Write-Output 'Installation completed.'
+# Verify the installation
+if (Test-Path "$installPathLibreOffice\program\soffice.exe") {
+    Write-Output 'LibreOffice installed successfully.'
+} else {
+    Write-Error 'LibreOffice installation verification failed.'
+    exit 1
+}
 
 # Delete the downloaded installer after installation
 Write-Output 'Deleting LibreOffice installer...'
-Remove-Item 'LibreOffice_24.2.4_Win_x86-64.msi' -Force
-
-Write-Output 'Installer deleted. Installation process is complete.'
+try {
+    Remove-Item 'LibreOffice_24.2.4_Win_x86-64.msi' -Force
+    Write-Output 'Installer deleted successfully. Installation process is complete.'
+} catch {
+    Write-Error 'Failed to delete the LibreOffice installer.'
+}
