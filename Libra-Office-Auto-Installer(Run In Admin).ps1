@@ -15,20 +15,23 @@ $installPathLibreOffice = 'C:\Program Files\LibreOffice'
 # Change working directory to the script's directory
 Set-Location -Path $PSScriptRoot
 
-Write-Output 'Downloading LibreOffice installer...'
-
 # Downloading the LibreOffice installer
+Write-Output 'Downloading LibreOffice installer...'
 Invoke-WebRequest -Uri $LibreOfficeURL -OutFile 'LibreOffice_24.2.4_Win_x86-64.msi'
 
+# Installing LibreOffice
 Write-Output 'Installing LibreOffice...'
-
-# Execute the installation file
 Start-Process 'msiexec.exe' -ArgumentList "/i LibreOffice_24.2.4_Win_x86-64.msi /qn INSTALLDIR=`"$installPathLibreOffice`"" -NoNewWindow -Wait
 
-Write-Output 'Installation completed.'
+# Confirm installation
+if (Get-Command "$installPathLibreOffice\program\soffice.exe" -ErrorAction SilentlyContinue) {
+    Write-Output 'Installation completed successfully.'
+} else {
+    Write-Output 'Installation failed.'
+    Exit 1
+}
 
 # Delete the downloaded installer after installation
 Write-Output 'Deleting LibreOffice installer...'
 Remove-Item 'LibreOffice_24.2.4_Win_x86-64.msi' -Force
-
 Write-Output 'Installer deleted. Installation process is complete.'
