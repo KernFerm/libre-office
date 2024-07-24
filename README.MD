@@ -14,11 +14,11 @@ This PowerShell script automates the process of downloading and installing Libre
 - You need to have PowerShell installed on your system. This is used to run the script.
 - `Both` MSI are from the official github page of [Official-PowerShell-Github](https://github.com/PowerShell)
 
-# v7.4.3 Release of PowerShell - Latest (recommended)
+# v7.4.4 Release of PowerShell - Latest (recommended)
       choose your recommended pc specs either 32bit or 64bit 
 
-- [64-Bit-Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.3/PowerShell-7.4.3-win-x64.msi)
-- [32-Bit-Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.3/PowerShell-7.4.3-win-x86.msi)
+- For `64-bit systems`, [Download 64-Bit Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.4/PowerShell-7.4.4-win-x64.msi)
+- For `32-bit systems`, [Download 32-Bit Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.4/PowerShell-7.4.4-win-x86.msi)
 
 
 # PowerShell Script for LibreOffice Installation with Logging **RUN NON ADMIN**
