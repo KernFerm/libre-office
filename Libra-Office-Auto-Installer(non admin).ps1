@@ -1,5 +1,5 @@
 # Define URLs for software installers
-$LibreOfficeURL = 'https://tdf.mirror.garr.it/libreoffice/stable/24.2.4/win/x86_64/LibreOffice_24.2.4_Win_x86-64.msi'
+$LibreOfficeURL = 'https://tdf.mirror.garr.it/libreoffice/stable/24.8.0/win/x86_64/LibreOffice_24.8.0_Win_x86-64.msi'
 
 # Define installation paths (adjust as needed)
 $installPathLibreOffice = "$env:USERPROFILE\LibreOffice"
@@ -26,7 +26,7 @@ Log-Message 'Downloading LibreOffice installer...'
 
 try {
     # Downloading the LibreOffice installer
-    Invoke-WebRequest -Uri $LibreOfficeURL -OutFile 'LibreOffice_24.2.4_Win_x86-64.msi'
+    Invoke-WebRequest -Uri $LibreOfficeURL -OutFile 'LibreOffice_24.8.0_Win_x86-64.msi'
     Log-Message 'Download completed successfully.'
 } catch {
     Log-Message 'Failed to download the LibreOffice installer.' 'ERROR'
@@ -37,7 +37,7 @@ Log-Message 'Installing LibreOffice...'
 
 try {
     # Execute the installation file
-    Start-Process 'msiexec.exe' -ArgumentList "/i LibreOffice_24.2.4_Win_x86-64.msi /qn INSTALLDIR=`"$installPathLibreOffice`"" -NoNewWindow -Wait
+    Start-Process 'msiexec.exe' -ArgumentList "/i LibreOffice_24.8.0_Win_x86-64.msi /qn INSTALLDIR=`"$installPathLibreOffice`"" -NoNewWindow -Wait
     Log-Message 'Installation completed successfully.'
 } catch {
     Log-Message 'Failed to install LibreOffice.' 'ERROR'
@@ -54,7 +54,7 @@ if (Test-Path "$installPathLibreOffice\program\soffice.exe") {
 
 Log-Message 'Deleting LibreOffice installer...'
 try {
-    Remove-Item 'LibreOffice_24.2.4_Win_x86-64.msi' -Force
+    Remove-Item 'LibreOffice_24.8.0_Win_x86-64.msi' -Force
     Log-Message 'Installer deleted successfully. Installation process is complete.'
 } catch {
     Log-Message 'Failed to delete the LibreOffice installer.' 'ERROR'
