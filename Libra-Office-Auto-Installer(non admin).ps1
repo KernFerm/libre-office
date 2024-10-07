@@ -1,5 +1,5 @@
 # Define URLs for software installers
-$LibreOfficeURL = 'https://tdf.mirror.garr.it/libreoffice/stable/24.8.0/win/x86_64/LibreOffice_24.8.0_Win_x86-64.msi'
+$LibreOfficeURL = 'https://tdf.mirror.garr.it/libreoffice/stable/24.8.2/win/x86_64/LibreOffice_24.8.2_Win_x86-64.msi'
 
 # Store LibreOffice URL basename in variable
 $LibreOfficeFILE = Split-Path -Path $LibreOfficeURL -Leaf
