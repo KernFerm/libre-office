@@ -1,12 +1,15 @@
 # Define URLs for software installers
 $LibreOfficeURL = 'https://tdf.mirror.garr.it/libreoffice/stable/24.8.0/win/x86_64/LibreOffice_24.8.0_Win_x86-64.msi'
 
+# Store LibreOffice URL basename in variable
+$LibreOfficeFILE = Split-Path -Path $LibreOfficeURL -Leaf
+
 # Define installation paths (adjust as needed)
 $installPathLibreOffice = "$env:USERPROFILE\LibreOffice"
 $logFilePath = "$PSScriptRoot\install_log.txt"
 
 # Function to log messages
-function Log-Message {
+function Write-Log {
     param (
         [string]$message,
         [string]$type = 'INFO'
@@ -20,42 +23,42 @@ function Log-Message {
 # Change working directory to the script's directory
 Set-Location -Path $PSScriptRoot
 
-Log-Message 'Starting LibreOffice installation process.'
+Write-Log 'Starting LibreOffice installation process.'
 
-Log-Message 'Downloading LibreOffice installer...'
+Write-Log 'Downloading LibreOffice installer...'
 
 try {
     # Downloading the LibreOffice installer
-    Invoke-WebRequest -Uri $LibreOfficeURL -OutFile 'LibreOffice_24.8.0_Win_x86-64.msi'
-    Log-Message 'Download completed successfully.'
+    Invoke-WebRequest -Uri $LibreOfficeURL -OutFile $LibreOfficeFILE
+    Write-Log 'Download completed successfully.'
 } catch {
-    Log-Message 'Failed to download the LibreOffice installer.' 'ERROR'
+    Write-Log 'Failed to download the LibreOffice installer.' 'ERROR'
     exit 1
 }
 
-Log-Message 'Installing LibreOffice...'
+Write-Log 'Installing LibreOffice...'
 
 try {
     # Execute the installation file
-    Start-Process 'msiexec.exe' -ArgumentList "/i LibreOffice_24.8.0_Win_x86-64.msi /qn INSTALLDIR=`"$installPathLibreOffice`"" -NoNewWindow -Wait
-    Log-Message 'Installation completed successfully.'
+    Start-Process 'msiexec.exe' -ArgumentList "/i $LibreOfficeFILE /qn INSTALLDIR=`"$installPathLibreOffice`"" -NoNewWindow -Wait
+    Write-Log 'Installation completed successfully.'
 } catch {
-    Log-Message 'Failed to install LibreOffice.' 'ERROR'
+    Write-Log 'Failed to install LibreOffice.' 'ERROR'
     exit 1
 }
 
 # Verify the installation
 if (Test-Path "$installPathLibreOffice\program\soffice.exe") {
-    Log-Message 'LibreOffice installed successfully.'
+    Write-Log 'LibreOffice installed successfully.'
 } else {
-    Log-Message 'LibreOffice installation verification failed.' 'ERROR'
+    Write-Log 'LibreOffice installation verification failed.' 'ERROR'
     exit 1
 }
 
-Log-Message 'Deleting LibreOffice installer...'
+Write-Log 'Deleting LibreOffice installer...'
 try {
-    Remove-Item 'LibreOffice_24.8.0_Win_x86-64.msi' -Force
-    Log-Message 'Installer deleted successfully. Installation process is complete.'
+    Remove-Item $LibreOfficeFILE -Force
+    Write-Log 'Installer deleted successfully. Installation process is complete.'
 } catch {
-    Log-Message 'Failed to delete the LibreOffice installer.' 'ERROR'
+    Write-Log 'Failed to delete the LibreOffice installer.' 'ERROR'
 }
