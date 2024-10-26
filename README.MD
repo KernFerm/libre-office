@@ -22,10 +22,12 @@ Click the link to read [**Instructions**](https://www.gitprojects.fnbubbles420.o
 - **Internet connection** required to download the installer 🌐
 - You need to have PowerShell installed on your system to run the script.
 
-### 🛠️ PowerShell Installation
+### 🔧 v7.4.6 Release of PowerShell - Latest (recommended)
 
-- **Windows 64-bit systems**: [Download 64-Bit Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.5/PowerShell-7.4.5-win-x64.msi)
-- **Windows 32-bit systems**: [Download 32-Bit Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.5/PowerShell-7.4.5-win-x86.msi)
+Select the version that matches your system specs:
+
+- For **Windows 64-bit systems**: [Download 64-Bit Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.6/PowerShell-7.4.6-win-x64.msi)
+- For **Windows 32-bit systems**: [Download 32-Bit Installer](https://github.com/PowerShell/PowerShell/releases/download/v7.4.6/PowerShell-7.4.6-win-x86.msi)
 
 ---
 
